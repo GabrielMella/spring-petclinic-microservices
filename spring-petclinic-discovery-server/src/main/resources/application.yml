@@ -3,6 +3,10 @@ spring:
     name: discovery-server
   config:
     import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
+  security:
+    user:
+      name: eureka
+      password: ${EUREKA_PASSWORD}
 
 # Avoid some debugging logs at startup
 logging:

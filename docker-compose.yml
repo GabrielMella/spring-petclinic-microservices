@@ -17,12 +17,14 @@ services:
   discovery-server:
     image: springcommunity/spring-petclinic-discovery-server
     container_name: discovery-server
+    environment:
+      - EUREKA_PASSWORD=${EUREKA_PASSWORD}
     deploy:
       resources:
         limits:
           memory: 512M
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://discovery-server:8761"]
+      test: ["CMD", "curl", "-f", "http://discovery-server:8761/actuator/health"]
       interval: 5s
       timeout: 3s
       retries: 10
@@ -35,6 +37,8 @@ services:
   customers-service:
     image: springcommunity/spring-petclinic-customers-service
     container_name: customers-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:${EUREKA_PASSWORD}@discovery-server:8761/eureka/
     deploy:
       resources:
         limits:
@@ -50,6 +54,8 @@ services:
   visits-service:
     image: springcommunity/spring-petclinic-visits-service
     container_name: visits-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:${EUREKA_PASSWORD}@discovery-server:8761/eureka/
     deploy:
       resources:
         limits:
@@ -65,6 +71,8 @@ services:
   vets-service:
     image: springcommunity/spring-petclinic-vets-service
     container_name: vets-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:${EUREKA_PASSWORD}@discovery-server:8761/eureka/
     deploy:
       resources:
         limits:
@@ -85,6 +93,7 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - AZURE_OPENAI_KEY=${AZURE_OPENAI_KEY}
       - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:${EUREKA_PASSWORD}@discovery-server:8761/eureka/
     deploy:
       resources:
         limits:
@@ -101,6 +110,8 @@ services:
   api-gateway:
     image: springcommunity/spring-petclinic-api-gateway
     container_name: api-gateway
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:${EUREKA_PASSWORD}@discovery-server:8761/eureka/
     deploy:
       resources:
         limits:
@@ -126,6 +137,8 @@ services:
   admin-server:
     image: springcommunity/spring-petclinic-admin-server
     container_name: admin-server
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:${EUREKA_PASSWORD}@discovery-server:8761/eureka/
     deploy:
       resources:
         limits:
