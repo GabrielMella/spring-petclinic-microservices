@@ -4,6 +4,13 @@ spring:
   config:
     import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
 
+chaos:
+  monkey:
+    security:
+      enabled: true
+      username: ${CHAOS_MONKEY_USER:chaos}
+      password: ${CHAOS_MONKEY_PASSWORD:chaos}
+
 
 ---
 spring:

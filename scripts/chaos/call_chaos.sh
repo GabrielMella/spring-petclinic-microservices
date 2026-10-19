@@ -21,6 +21,8 @@ if [[ $# -lt 2 ]]; then
 fi
 
 export PORT="${PORT:-}"
+export CHAOS_MONKEY_USER="${CHAOS_MONKEY_USER:-chaos}"
+export CHAOS_MONKEY_PASSWORD="${CHAOS_MONKEY_PASSWORD:-chaos}"
 
 while [[ $# > 0 ]]
 do
@@ -36,10 +38,10 @@ case $1 in
         PORT=8083
         ;;
     attacks*)
-        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/assaults" -H "Content-Type: application/json" --data @"${1}".json --fail )
+        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/assaults" -u "${CHAOS_MONKEY_USER}:${CHAOS_MONKEY_PASSWORD}" -H "Content-Type: application/json" --data @"${1}".json --fail )
         ;;
     watcher*)
-        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/watchers" -H "Content-Type: application/json" --data @"${1}".json --fail )
+        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/watchers" -u "${CHAOS_MONKEY_USER}:${CHAOS_MONKEY_PASSWORD}" -H "Content-Type: application/json" --data @"${1}".json --fail )
         ;;
     *)
         usage

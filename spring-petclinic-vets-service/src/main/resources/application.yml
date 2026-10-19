@@ -8,6 +8,13 @@ spring:
   profiles:
     active: production
 
+chaos:
+  monkey:
+    security:
+      enabled: true
+      username: ${CHAOS_MONKEY_USER:chaos}
+      password: ${CHAOS_MONKEY_PASSWORD:chaos}
+
 ---
 spring:
   config:
