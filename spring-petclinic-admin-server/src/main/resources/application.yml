@@ -1,6 +1,10 @@
 spring:
   application:
     name: admin-server
+  security:
+    user:
+      name: admin
+      password: admin
   config:
     import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
 
