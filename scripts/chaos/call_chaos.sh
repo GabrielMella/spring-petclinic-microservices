@@ -22,6 +22,11 @@ fi
 
 export PORT="${PORT:-}"
 
+if [[ -z "${CHAOS_MONKEY_USER:-}" || -z "${CHAOS_MONKEY_PASSWORD:-}" ]]; then
+    echo "ERROR: CHAOS_MONKEY_USER and CHAOS_MONKEY_PASSWORD environment variables must be set" >&2
+    exit 1
+fi
+
 while [[ $# > 0 ]]
 do
 key="$1"
@@ -36,10 +41,10 @@ case $1 in
         PORT=8083
         ;;
     attacks*)
-        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/assaults" -H "Content-Type: application/json" --data @"${1}".json --fail )
+        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/assaults" -u "${CHAOS_MONKEY_USER}:${CHAOS_MONKEY_PASSWORD}" -H "Content-Type: application/json" --data @"${1}".json --fail )
         ;;
     watcher*)
-        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/watchers" -H "Content-Type: application/json" --data @"${1}".json --fail )
+        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/watchers" -u "${CHAOS_MONKEY_USER}:${CHAOS_MONKEY_PASSWORD}" -H "Content-Type: application/json" --data @"${1}".json --fail )
         ;;
     *)
         usage
