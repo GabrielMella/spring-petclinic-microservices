@@ -7,6 +7,10 @@ spring:
     cache-names: vets
   profiles:
     active: production
+  security:
+    user:
+      name: chaos-admin
+      password: ${CHAOS_MONKEY_PASSWORD:changeme}
 
 ---
 spring:

@@ -36,10 +36,10 @@ case $1 in
         PORT=8083
         ;;
     attacks*)
-        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/assaults" -H "Content-Type: application/json" --data @"${1}".json --fail )
+        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/assaults" -u "chaos-admin:${CHAOS_MONKEY_PASSWORD:-changeme}" -H "Content-Type: application/json" --data @"${1}".json --fail )
         ;;
     watcher*)
-        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/watchers" -H "Content-Type: application/json" --data @"${1}".json --fail )
+        ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/watchers" -u "chaos-admin:${CHAOS_MONKEY_PASSWORD:-changeme}" -H "Content-Type: application/json" --data @"${1}".json --fail )
         ;;
     *)
         usage

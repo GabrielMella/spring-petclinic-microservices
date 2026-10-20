@@ -3,6 +3,10 @@ spring:
     name: customers-service
   config:
     import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
+  security:
+    user:
+      name: chaos-admin
+      password: ${CHAOS_MONKEY_PASSWORD:changeme}
 
 
 ---

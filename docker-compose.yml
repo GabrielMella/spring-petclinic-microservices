@@ -39,6 +39,8 @@ services:
       resources:
         limits:
           memory: 512M
+    environment:
+      - CHAOS_MONKEY_PASSWORD=${CHAOS_MONKEY_PASSWORD:-changeme}
     depends_on:
       config-server:
         condition: service_healthy
@@ -54,6 +56,8 @@ services:
       resources:
         limits:
           memory: 512M
+    environment:
+      - CHAOS_MONKEY_PASSWORD=${CHAOS_MONKEY_PASSWORD:-changeme}
     depends_on:
       config-server:
         condition: service_healthy
@@ -69,6 +73,8 @@ services:
       resources:
         limits:
           memory: 512M
+    environment:
+      - CHAOS_MONKEY_PASSWORD=${CHAOS_MONKEY_PASSWORD:-changeme}
     depends_on:
       config-server:
         condition: service_healthy
