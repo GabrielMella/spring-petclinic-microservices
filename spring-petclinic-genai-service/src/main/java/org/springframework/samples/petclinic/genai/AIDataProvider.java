@@ -87,7 +87,12 @@ public class AIDataProvider {
 
     @NotNull
     private URI getCustomerServiceUri() {
-        return discoveryClient.getInstances("customers-service").get(0).getUri();
+        List<org.springframework.cloud.client.ServiceInstance> instances =
+            discoveryClient.getInstances("customers-service");
+        if (instances.isEmpty()) {
+            throw new IllegalStateException("customers-service is not available: no instances registered");
+        }
+        return instances.get(0).getUri();
     }
 
 }
