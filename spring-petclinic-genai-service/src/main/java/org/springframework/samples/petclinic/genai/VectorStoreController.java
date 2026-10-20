@@ -90,7 +90,7 @@ public class VectorStoreController {
 		logger.info("vector store loaded with {} documents", documents.size());
 	}
 
-	public Resource convertListToJsonResource(List<Vet> vets) {
+	public Resource convertListToJsonResource(List<Vet> vets) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			// Convert List<Vet> to JSON string
@@ -103,8 +103,7 @@ public class VectorStoreController {
 			return new ByteArrayResource(jsonBytes);
 		}
 		catch (JacksonException e) {
-            logger.error("Error processing JSON in the convertListToJsonResource function", e);
-			return null;
+			throw new IOException("Failed to serialize vets to JSON", e);
 		}
 	}
 
