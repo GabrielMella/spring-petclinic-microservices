@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.samples.petclinic.genai.dto.OwnerDetails;
@@ -87,7 +88,11 @@ public class AIDataProvider {
 
     @NotNull
     private URI getCustomerServiceUri() {
-        return discoveryClient.getInstances("customers-service").get(0).getUri();
+        List<ServiceInstance> instances = discoveryClient.getInstances("customers-service");
+        if (instances.isEmpty()) {
+            throw new IllegalStateException("customers-service is not available");
+        }
+        return instances.get(0).getUri();
     }
 
 }
