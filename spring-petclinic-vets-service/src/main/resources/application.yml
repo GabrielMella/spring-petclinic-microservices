@@ -8,6 +8,10 @@ spring:
   profiles:
     active: production
 
+management:
+  server:
+    port: 8093
+
 ---
 spring:
   config:

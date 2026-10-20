@@ -27,13 +27,13 @@ do
 key="$1"
 case $1 in
     customers)
-        PORT=8081
+        PORT=8091
         ;;
     visits)
-        PORT=8082
+        PORT=8092
         ;;
     vets)
-        PORT=8083
+        PORT=8093
         ;;
     attacks*)
         ( cd "${ROOT_DIR}" && curl "http://localhost:${PORT}/actuator/chaosmonkey/assaults" -H "Content-Type: application/json" --data @"${1}".json --fail )
